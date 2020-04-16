@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "259284056998",
+    "firebase_url": "https://untels-f6d3e.firebaseio.com",
+    "project_id": "untels-f6d3e",
+    "storage_bucket": "untels-f6d3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259284056998:android:df504197ee041175a06d67",
+        "android_client_info": {
+          "package_name": "com.example.platform_univ"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259284056998-q8k2t6kkoockh3o4dn6voafbufvuq5pr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.platform_univ",
+            "certificate_hash": "3d0df170eba320d0b668fc8bc5ee8a77253f4187"
+          }
+        },
+        {
+          "client_id": "259284056998-8nginpo2p0c5q1afh5ove6fm0iriilkc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcCDEcWQWDxQosfP3k3RhPPxMhE68vUZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259284056998-8nginpo2p0c5q1afh5ove6fm0iriilkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
