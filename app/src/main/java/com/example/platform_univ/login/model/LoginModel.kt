@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginModel(private val presenter: LoginPresenter) : LoginMVP.Model {
 
-    private var auth= FirebaseAuth.getInstance()
+    internal val auth= FirebaseAuth.getInstance()
 
     override fun logIn(user: String, password: String) : Task<AuthResult> {
         return auth.signInWithEmailAndPassword(user, password)

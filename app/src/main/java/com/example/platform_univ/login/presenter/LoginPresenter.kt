@@ -35,7 +35,7 @@ class LoginPresenter( private val view: LoginMVP.View ): LoginMVP.Presenter {
     }
 
     override fun onDestroy() {
-        FirebaseAuth.getInstance().signOut()
+        model.auth.signOut()
     }
 
 }

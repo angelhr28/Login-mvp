@@ -1,3 +1,4 @@
+//noinspection GradleDynamicVersion
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -75,10 +76,14 @@ android {
         implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
         implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
         implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
+
+        //LifeData MVVM
+        implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+        implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     }
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:+'
-    implementation 'androidx.constraintlayout:constraintlayout:+'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
