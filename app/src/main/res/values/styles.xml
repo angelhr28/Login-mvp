@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -6,6 +6,24 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CustomInputFilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:importantForAutofill" tools:targetApi="o">noExcludeDescendants</item>
+        <item name="boxCornerRadiusTopStart">@dimen/corner_input</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/corner_input</item>
+        <item name="android:fontFamily">@font/googlesans_regular</item>
+        <item name="android:typeface">@font/googlesans_regular</item>
+        <item name="android:textColor">@color/colorPrimary </item>
+    </style>
+
+    <style name="CustomEditTextFilledBoxDense" parent="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:fontFamily">@font/googlesans_regular</item>
+        <item name="android:textColor">@color/colorPrimary </item>
+        <item name="android:textSize">17dp</item>
     </style>
 
 </resources>

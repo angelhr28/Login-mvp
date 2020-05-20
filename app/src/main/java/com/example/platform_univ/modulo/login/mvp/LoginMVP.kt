@@ -1,4 +1,4 @@
-package com.example.platform_univ.login.mvp
+package com.example.platform_univ.modulo.login.mvp
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -14,7 +14,6 @@ interface LoginMVP {
 
     interface Presenter{
         fun logIn(user:String, password:String)
-        fun onDestroy()
     }
 
     interface Model{

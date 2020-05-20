@@ -1,8 +1,6 @@
-package com.example.platform_univ.helpers.application
+package com.example.platform_univ.helper
 
 import android.Manifest
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager

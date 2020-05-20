@@ -1,19 +1,19 @@
-package com.example.platform_univ.login.view
+package com.example.platform_univ.modulo.login.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.platform_univ.R
-import com.example.platform_univ.login.mvp.LoginMVP
-import com.example.platform_univ.login.presenter.LoginPresenter
+import com.example.platform_univ.modulo.login.mvp.LoginMVP
+import com.example.platform_univ.modulo.login.presenter.LoginPresenter
+import com.example.platform_univ.modulo.principal.view.PrincipalActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import pe.softhy.smiledu.helper.application.Constants.FIREBASE_AUTH
 
 class LoginActivity : AppCompatActivity(), LoginMVP.View {
 
@@ -43,8 +43,9 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
         }
 
         lblCreateUser.setOnClickListener {
-            val intent = Intent(this,  PerfilActivity::class.java)
+            val intent = Intent(this,  RegisterUserActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
@@ -56,8 +57,9 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()}
 
     override fun logInSuccess() {
-        val intent = Intent(this,  PerfilActivity::class.java)
+        val intent = Intent(this,  PrincipalActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun logInError() {
@@ -67,9 +69,14 @@ class LoginActivity : AppCompatActivity(), LoginMVP.View {
         edtPass.clearFocus()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onDestroy()
+    override fun onStart() {
+        super.onStart()
+        if (FIREBASE_AUTH.currentUser != null){
+            val intent = Intent(this,  PrincipalActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        
     }
 
 }
