@@ -4,6 +4,7 @@ import com.example.platform_univ.modulo.login.model.RegisterModel
 import com.example.platform_univ.modulo.login.model.pojo.Usuario
 import com.example.platform_univ.modulo.login.mvp.RegisterMVP
 import com.example.platform_univ.root.preferences
+import com.google.firebase.storage.StorageReference
 import pe.softhy.smiledu.helper.application.Constants.FIREBASE_AUTH
 import pe.softhy.smiledu.helper.application.Constants.FIREBASE_DB
 

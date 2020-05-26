@@ -39,7 +39,6 @@ class LoginPresenter( private val view: LoginMVP.View ): LoginMVP.Presenter {
                                         view.showToask("El usuario no existe.")
                                         view.hideProgres()
                                     }
-
                                     override fun onDataChange(result: DataSnapshot) {
                                         if(result.exists()){
                                             preferences.apply {

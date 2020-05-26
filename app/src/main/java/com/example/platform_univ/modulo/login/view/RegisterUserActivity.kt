@@ -1,22 +1,29 @@
 package com.example.platform_univ.modulo.login.view
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.platform_univ.R
 import com.example.platform_univ.modulo.login.mvp.RegisterMVP
 import com.example.platform_univ.modulo.login.presenter.RegisterPresenter
-import com.example.platform_univ.modulo.principal.view.PrincipalActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_register_user.*
+import pe.softhy.smiledu.helper.application.Constants.FIREBASE_STORAGE
+
 
 class RegisterUserActivity : AppCompatActivity(), RegisterMVP.View {
 
+    private val TAG  = this.javaClass.toString()
     private lateinit var contEdtName  : TextInputLayout
     private lateinit var contEdtApe   : TextInputLayout
     private lateinit var contEdtPhone : TextInputLayout
@@ -27,10 +34,13 @@ class RegisterUserActivity : AppCompatActivity(), RegisterMVP.View {
     private lateinit var edtPhone     : TextInputEditText
     private lateinit var edtEmail     : TextInputEditText
     private lateinit var edtPass      : TextInputEditText
+    private lateinit var btnImag      : FloatingActionButton
+    private lateinit var imagPhoto    : ImageView
     private lateinit var btnRegist    : Button
-    private lateinit var dataBaseUser : DatabaseReference
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var presenter: RegisterMVP.Presenter
+    private lateinit var presenter    : RegisterMVP.Presenter
+    private lateinit var strorageRef  : StorageReference
+    private lateinit var uriImage     : Uri
+    val strorageRefP = FIREBASE_STORAGE.getReference("images")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +57,11 @@ class RegisterUserActivity : AppCompatActivity(), RegisterMVP.View {
         edtEmail     = edt_email_user
         edtPass      = edt_pass_user
         btnRegist    = btn_register
+        btnImag      = btn_add_img
+        imagPhoto    = img_foto_regist
 
         presenter = RegisterPresenter(this)
-
+        strorageRef = FIREBASE_STORAGE.reference
         btnRegist.setOnClickListener {
             val name   = edtName.text?.trim().toString()
             val pass   = edtPass.text?.trim().toString()
@@ -57,6 +69,57 @@ class RegisterUserActivity : AppCompatActivity(), RegisterMVP.View {
             val phone  = edtPhone.text?.trim().toString()
             val email  = edtEmail.text?.trim().toString()
             presenter.registerUser(name,pass,ape,phone,email)
+        }
+
+        btnImag.setOnClickListener {
+            fileChooser()
+        }
+
+    }
+
+
+    fun getExtension (uri: Uri): String? {
+        val cr = contentResolver
+        val mimeTypeMap = MimeTypeMap.getSingleton()
+        return  mimeTypeMap.getMimeTypeFromExtension(cr.getType(uri))
+    }
+    fun getMimeType(url: String?): String? {
+        var type: String? = null
+        val extension = MimeTypeMap.getFileExtensionFromUrl(url)
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        }
+        return type
+    }
+    private fun fileUploader() {
+        Log.e(TAG,"meraa :: ${getExtension(uriImage)}")
+        val ref = strorageRefP.child("${System.currentTimeMillis()}.${getExtension(uriImage)}"  )
+
+        ref.putFile(uriImage)
+            .addOnSuccessListener { taskSnapshot -> // Get a URL to the uploaded content
+                val downloadUrl: String = taskSnapshot.storage.downloadUrl.toString()
+                Log.e(TAG,"holaaa $downloadUrl")
+                showToask("se subio revisa prro :v")
+            }
+    }
+
+    private fun fileChooser(){
+        val intent = Intent()
+        intent.apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, 1)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null){
+            data.data?.let {
+                uriImage = it
+                imagPhoto.setImageURI(uriImage)
+            }
+
         }
     }
 
@@ -71,9 +134,12 @@ class RegisterUserActivity : AppCompatActivity(), RegisterMVP.View {
     }
 
     override fun registerSuccess() {
-        val intent = Intent(this,  PrincipalActivity::class.java)
-        startActivity(intent)
-        finish()
+        fileUploader()
+
+
+//        val intent = Intent(this,  PrincipalActivity::class.java)
+//        startActivity(intent)
+//        finish()
     }
 
     override fun registerError() {
@@ -88,4 +154,6 @@ class RegisterUserActivity : AppCompatActivity(), RegisterMVP.View {
         edtPhone.clearFocus()
         edtEmail.clearFocus()
     }
+
+
 }
